@@ -10,11 +10,11 @@ def pme1(string1, string2):
                 pme = string1[0:i + 1] + string2[j + 1: len(string2)]
                 return pme
 
-def main():
-    word1 = input("Enter a word: ")
-    word2 = input("Enter another word: ")
-    portmanteau = pme1(word1, word2)
-    print(portmanteau)
-
-
-main()
+# def main():
+#     word1 = input("Enter a word: ")
+#     word2 = input("Enter another word: ")
+#     portmanteau = pme1(word1, word2)
+#     print(portmanteau)
+#
+#
+# main()
