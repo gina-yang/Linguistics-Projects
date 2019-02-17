@@ -22,7 +22,7 @@ def common3String(string1, string2):
                 return string1[:i] + string2[j+3:]
     return "n/a"
 
-# Returns a dictionary mapping vowel position in input string to vowel
+# Returns a list with vowel positions in input string
 def vowelFinder(string):
     vowels = ["a", "e", "i", "o", "u"]
     counter = 0
@@ -36,34 +36,38 @@ def vowelFinder(string):
 # Returns the portmanteau if the strings contain the same vowel (excluding the first 2 letters of the first word
 # and the last 2 letters of the second word)
 def sameVowelComp(string1, string2):
+    vowels = ["a", "e", "i", "o", "u"]
     for i in range(2, len(string1)):
         for j in range(len(string2) - 2, 0, -1):
-            if string1[i] == string2[j]:
+            if string1[i] == string2[j] and string1[i] in vowels and string2[j] in vowels:
                 return string1[:i] + string2[j:]
     return "n/a"
 
 def diffVowelComp(vowelList1, vowelList2, string1, string2):
     max1 = max(vowelList1)
     min2 = min(vowelList2)
-    print(max1)
-    print(min2)
+    # print(max1)
+    # print(min2)
     return string1[:max1] + string2[min2:]
 
 # Portmanteau handler function
 def pme(string1, string2):
     if common3String(string1, string2) != "n/a":
+        # print("3 string common")
         return common3String(string1, string2)
     elif sameVowelComp(string1, string2) != "n/a":
+        # print("Same vowel")
         return sameVowelComp(string1, string2)
     else:
+        # print("Different vowel")
         return diffVowelComp(vowelFinder(string1), vowelFinder(string2), string1, string2)
 
 def main():
     word1 = input("Enter a word: ")
     word2 = input("Enter another word: ")
 
-    print(vowelFinder(word1))
-    print(vowelFinder(word2))
+    # print(vowelFinder(word1))
+    # print(vowelFinder(word2))
     print(pme(word1, word2))
 
 
