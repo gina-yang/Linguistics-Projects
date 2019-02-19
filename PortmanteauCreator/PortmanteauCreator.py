@@ -19,7 +19,7 @@ def commonEndConsonant(string1, string2):
     for i in range(len(string1) - 1, 2, -1):
         for j in range(1, len(string2) - 3):
             if string1[i] == string2[j] and string1[i] not in vowels and string2[j] not in vowels:
-                pme = string1[0:i + 1] + string2[j + 1: len(string2)]
+                pme = string1[:i] + string2[j:]
                 return pme
     return "n/a"
 
