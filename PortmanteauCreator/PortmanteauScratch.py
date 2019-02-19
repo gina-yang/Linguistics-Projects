@@ -4,7 +4,8 @@
 # The letter is removed from the second word and the words are appended.
 # Ex. beefalo = beef + buffalo; Reagan + economics = Reaganomics
 def commonEndLetter(string1, string2):
-    for i in range(0, len(string1) - 1, -1):
+    for i in range(len(string1) - 1, 0, -1):
+        print("hello")
         for j in range(0, len(string2)):
             if string1[i] == string2[j]:
                 pme = string1[0:i + 1] + string2[j + 1: len(string2)]
@@ -69,7 +70,8 @@ def main():
 
     # print(vowelFinder(word1))
     # print(vowelFinder(word2))
-    print(pme(word1, word2))
+    print(commonEndLetter(word1, word2))
+    # print(pme(word1, word2))
 
 
 main()

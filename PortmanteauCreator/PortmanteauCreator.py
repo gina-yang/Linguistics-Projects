@@ -1,28 +1,53 @@
-# Type 1: The words share a common letter.
-# The letter is removed from the second word and the words are appended.
-# Ex. beefalo = beef + buffalo; Reagan + economics = Reaganomics
-def commonEndLetter(string1, string2):
-    for i in range(0, len(string1) - 1, -1):
-        for j in range(0, len(string2)):
-            if string1[i] == string2[j]:
-                pme = string1[0:i + 1] + string2[j + 1: len(string2)]
-                return pme
-
-# Sees if there is a string of length 3 in common between the words. If so, removes from the first word everything
-# after the common string and removes from the second word the common string and everything before it
-# and concatenates them
-# Returns "n/a" if no string in common. Otherwise, returns the concatenated string
+# Type 1: The words share 3 letters in common.
+# Excludes the first 2 letters of the first word and the last 2 of the second.
+# If so, removes from the first word everything after the common string and removes from the second word the common
+# string and everything before it and concatenates them
 # Ex. hamster + termite = hamstermite
 def common3String(string1, string2):
     for i in range(2, len(string1), -1):
-        for j in range(0, len(string2) - 2):
+        for j in range(0, len(string2) - 3):
             if string1[i-3:i] == string2[j:j+3]:
                 return string1[:i] + string2[j+3:]
     return "n/a"
 
+# Type 2: The words share a common consonant.
+# Excludes the first letter and last 2 letters of the second word, and the first two letters of the first word.
+# The letter is removed from the second word and the words are appended.
+# Ex. beeffalo = beef + buffalo; Reagan + economics = Reaganomics
+def commonEndConsonant(string1, string2):
+    vowels = ["a", "e", "i", "o", "u", "y"]
+    for i in range(len(string1) - 1, 2, -1):
+        for j in range(1, len(string2) - 3):
+            if string1[i] == string2[j] and string1[i] not in vowels and string2[j] not in vowels:
+                pme = string1[0:i + 1] + string2[j + 1: len(string2)]
+                return pme
+    return "n/a"
+
+# Type 3: the strings contain the same vowel
+# Excludes the first 2 letters of the first word and the last 2 letters of the second word)
+# If so, removes from the first word everything after the common vowel and removes from the second word the common
+# vowel and everything before it and concatenates them
+def sameVowelComp(string1, string2):
+    vowels = ["a", "e", "i", "o", "u", "y"]
+    for i in range(2, len(string1)):
+        for j in range(len(string2) - 3, 0, -1):
+            if string1[i] == string2[j] and string1[i] in vowels and string2[j] in vowels:
+                return string1[:i] + string2[j:]
+    return "n/a"
+
+# Type 4: The strings contain differing vowels (should cover all the other cases)
+# If so, takes the last vowel in the first word and the first vowel in the second word...
+# Removes from the first word the chosen vowel and everything after and removes from the second word everything before
+# the chosen vowel and concatenates them
+# (Note: keeping the vowel from the second word facilitates rhyming the portmanteau with the original phrase
+def diffVowelComp(vowelList1, vowelList2, string1, string2):
+    max1 = max(vowelList1)
+    min2 = min(vowelList2)
+    return string1[:max1] + string2[min2:]
+
 # Returns a list with vowel positions in input string
 def vowelFinder(string):
-    vowels = ["a", "e", "i", "o", "u"]
+    vowels = ["a", "e", "i", "o", "u", "y"]
     counter = 0
     vowelList = []
     for i in string:
@@ -31,43 +56,28 @@ def vowelFinder(string):
         counter += 1
     return vowelList
 
-# Returns the portmanteau if the strings contain the same vowel (excluding the first 2 letters of the first word
-# and the last 2 letters of the second word)
-def sameVowelComp(string1, string2):
-    vowels = ["a", "e", "i", "o", "u"]
-    for i in range(2, len(string1)):
-        for j in range(0, len(string2) - 2, -1):
-            print("Looking at: ", j)
-            if string1[i] == string2[j] and string1[i] in vowels and string2[j] in vowels:
-                return string1[:i] + string2[j:]
-    return "n/a"
-
-def diffVowelComp(vowelList1, vowelList2, string1, string2):
-    max1 = max(vowelList1)
-    min2 = min(vowelList2)
-    # print(max1)
-    # print(min2)
-    return string1[:max1] + string2[min2:]
-
 # Portmanteau handler function
-def pme(string1, string2):
-    if common3String(string1, string2) != "n/a":
-        # print("3 string common")
+def portmanteau(string1, string2):
+    if common3String(string1, string2) != "n/a":  # Type 1
+        print("3 string common")
         return common3String(string1, string2)
-    elif sameVowelComp(string1, string2) != "n/a":
-        # print("Same vowel")
+    elif commonEndConsonant(string1, string2) != "n/a":  # Type 2
+        print("Common end consonant")
+        return commonEndConsonant(string1, string2)
+    elif sameVowelComp(string1, string2) != "n/a":  # Type 3
+        print("Same vowel")
         return sameVowelComp(string1, string2)
-    else:
-        # print("Different vowel")
+    else:  # Type 4 (everything else)
+        print("Different vowel")
         return diffVowelComp(vowelFinder(string1), vowelFinder(string2), string1, string2)
 
 def main():
     word1 = input("Enter a word: ")
     word2 = input("Enter another word: ")
 
-    # print(vowelFinder(word1))
-    # print(vowelFinder(word2))
-    print(pme(word1, word2))
-
-
+    pme = portmanteau(word1, word2)
+    if pme == "n/a":
+        print("No portmanteau found.")
+    else:
+        print(pme)
 main()
