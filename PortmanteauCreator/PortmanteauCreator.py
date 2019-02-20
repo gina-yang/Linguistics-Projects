@@ -59,16 +59,12 @@ def vowelFinder(string):
 # Portmanteau handler function
 def portmanteau(string1, string2):
     if common3String(string1, string2) != "n/a":  # Type 1
-        print("3 string common")
         return common3String(string1, string2)
     elif commonEndConsonant(string1, string2) != "n/a":  # Type 2
-        print("Common end consonant")
         return commonEndConsonant(string1, string2)
     elif sameVowelComp(string1, string2) != "n/a":  # Type 3
-        print("Same vowel")
         return sameVowelComp(string1, string2)
     else:  # Type 4 (everything else)
-        print("Different vowel")
         return diffVowelComp(vowelFinder(string1), vowelFinder(string2), string1, string2)
 
 def main():
@@ -80,4 +76,5 @@ def main():
         print("No portmanteau found.")
     else:
         print(pme)
+
 main()
