@@ -68,10 +68,7 @@ def main():
     word1 = input("Enter a word: ")
     word2 = input("Enter another word: ")
 
-    # print(vowelFinder(word1))
-    # print(vowelFinder(word2))
-    print(commonEndLetter(word1, word2))
-    # print(pme(word1, word2))
+    print(pme(word1, word2))
 
 
 main()
